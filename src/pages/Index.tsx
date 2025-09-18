@@ -1,13 +1,37 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { AuthForm } from "@/components/AuthForm";
+import { Layout } from "@/components/Layout";
+import { Dashboard } from "@/components/Dashboard";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
+  const [user, setUser] = useState<{ role: string } | null>(null);
+  const { toast } = useToast();
+
+  const handleLogin = (role: string) => {
+    setUser({ role });
+    toast({
+      title: "Login Successful",
+      description: `Welcome to KMRL Document Intelligence System`,
+    });
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out",
+    });
+  };
+
+  if (!user) {
+    return <AuthForm onLogin={handleLogin} />;
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <Layout userRole={user.role} onLogout={handleLogout}>
+      <Dashboard userRole={user.role} />
+    </Layout>
   );
 };
 

@@ -1,4 +1,5 @@
 import { ReactNode, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -47,17 +48,18 @@ const roleConfig = {
 };
 
 const navigation = [
-  { name: "Dashboard", href: "#", icon: Home, roles: ["admin", "engineer", "hr", "finance"] },
-  { name: "Documents", href: "#", icon: FileText, roles: ["admin", "engineer", "hr", "finance"] },
-  { name: "Search", href: "#", icon: Search, roles: ["admin", "engineer", "hr", "finance"] },
-  { name: "Upload", href: "#", icon: Upload, roles: ["admin", "engineer", "hr", "finance"] },
-  { name: "Analytics", href: "#", icon: BarChart3, roles: ["admin"] },
-  { name: "Settings", href: "#", icon: Settings, roles: ["admin"] },
+  { name: "Dashboard", href: "/", icon: Home, roles: ["admin", "engineer", "hr", "finance"] },
+  { name: "Search", href: "/search", icon: Search, roles: ["admin", "engineer", "hr", "finance"] },
+  { name: "Upload", href: "/upload", icon: Upload, roles: ["admin", "engineer", "hr", "finance"] },
+  { name: "Analytics", href: "/analytics", icon: BarChart3, roles: ["admin"] },
+  { name: "Settings", href: "/settings", icon: Settings, roles: ["admin"] },
 ];
 
 export const Layout = ({ children, userRole, onLogout }: LayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notifications] = useState(3);
+  const navigate = useNavigate();
+  const location = useLocation();
   
   const currentRole = roleConfig[userRole as keyof typeof roleConfig];
   const filteredNavigation = navigation.filter(item => 
@@ -111,7 +113,11 @@ export const Layout = ({ children, userRole, onLogout }: LayoutProps) => {
               <Button
                 key={item.name}
                 variant="ghost"
-                className="w-full justify-start hover:bg-accent"
+                className={cn(
+                  "w-full justify-start hover:bg-accent",
+                  location.pathname === item.href ? "bg-accent text-accent-foreground" : ""
+                )}
+                onClick={() => navigate(item.href)}
               >
                 <item.icon className="h-5 w-5 mr-3" />
                 {item.name}

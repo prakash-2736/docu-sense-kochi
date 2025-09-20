@@ -51,6 +51,8 @@ const navigation = [
   { name: "Dashboard", href: "/", icon: Home, roles: ["admin", "engineer", "hr", "finance"] },
   { name: "Search", href: "/search", icon: Search, roles: ["admin", "engineer", "hr", "finance"] },
   { name: "Upload", href: "/upload", icon: Upload, roles: ["admin", "engineer", "hr", "finance"] },
+  { name: "Tasks", href: "/tasks", icon: FileText, roles: ["admin", "engineer", "hr", "finance"] },
+  { name: "Notifications", href: "/notifications", icon: Bell, roles: ["admin", "engineer", "hr", "finance"] },
   { name: "Analytics", href: "/analytics", icon: BarChart3, roles: ["admin"] },
   { name: "Settings", href: "/settings", icon: Settings, roles: ["admin"] },
 ];

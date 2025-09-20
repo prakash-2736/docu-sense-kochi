@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthForm } from "@/components/AuthForm";
 import { Layout } from "@/components/Layout";
 import { Dashboard } from "@/components/Dashboard";
 import { DocumentUpload } from "@/components/DocumentUpload";
 import { DocumentSearch } from "@/components/DocumentSearch";
+import { TaskManagement } from "@/components/TaskManagement";
+import { NotificationCenter } from "@/components/NotificationCenter";
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
@@ -32,16 +34,16 @@ const Index = () => {
   }
 
   return (
-    <Router>
-      <Layout userRole={user.role} onLogout={handleLogout}>
-        <Routes>
-          <Route path="/" element={<Dashboard userRole={user.role} />} />
-          <Route path="/upload" element={<DocumentUpload userRole={user.role} />} />
-          <Route path="/search" element={<DocumentSearch userRole={user.role} />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Layout>
-    </Router>
+    <Layout userRole={user.role} onLogout={handleLogout}>
+      <Routes>
+        <Route path="/" element={<Dashboard userRole={user.role} />} />
+        <Route path="/upload" element={<DocumentUpload userRole={user.role} />} />
+        <Route path="/search" element={<DocumentSearch userRole={user.role} />} />
+        <Route path="/tasks" element={<TaskManagement userRole={user.role} />} />
+        <Route path="/notifications" element={<NotificationCenter userRole={user.role} />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Layout>
   );
 };
 

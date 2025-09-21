@@ -115,9 +115,9 @@ export const Dashboard = ({ userRole }: DashboardProps) => {
     : mockDocuments.filter(doc => doc.department.toLowerCase() === userRole || userRole === "engineer");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 page-enter">
       {/* Welcome Header */}
-      <div className="bg-gradient-hero rounded-lg p-6 text-white shadow-glow">
+      <div className="bg-gradient-hero rounded-lg p-6 text-white shadow-glow animate-fade-in">
         <h1 className="text-2xl font-bold mb-2">
           Welcome to KMRL Document Intelligence
         </h1>
@@ -128,7 +128,7 @@ export const Dashboard = ({ userRole }: DashboardProps) => {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="shadow-soft">
+        <Card className="shadow-soft card-hover stagger-item">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -140,7 +140,7 @@ export const Dashboard = ({ userRole }: DashboardProps) => {
           </CardContent>
         </Card>
 
-        <Card className="shadow-soft">
+        <Card className="shadow-soft card-hover stagger-item">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -152,7 +152,7 @@ export const Dashboard = ({ userRole }: DashboardProps) => {
           </CardContent>
         </Card>
 
-        <Card className="shadow-soft">
+        <Card className="shadow-soft card-hover stagger-item">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -164,7 +164,7 @@ export const Dashboard = ({ userRole }: DashboardProps) => {
           </CardContent>
         </Card>
 
-        <Card className="shadow-soft">
+        <Card className="shadow-soft card-hover stagger-item">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -180,7 +180,7 @@ export const Dashboard = ({ userRole }: DashboardProps) => {
       </div>
 
       {/* Recent Documents */}
-      <Card className="shadow-medium">
+      <Card className="shadow-medium animate-slide-in-up">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -189,7 +189,7 @@ export const Dashboard = ({ userRole }: DashboardProps) => {
                 Latest documents processed by the intelligence system
               </CardDescription>
             </div>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="hover-glow">
               <Search className="h-4 w-4 mr-2" />
               View All
             </Button>
@@ -197,19 +197,20 @@ export const Dashboard = ({ userRole }: DashboardProps) => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {filteredDocuments.map((doc) => (
+            {filteredDocuments.map((doc, index) => (
               <div 
                 key={doc.id}
                 className={cn(
-                  "p-4 border rounded-lg transition-all cursor-pointer hover:shadow-soft",
+                  "p-4 border rounded-lg transition-all cursor-pointer hover:shadow-soft hover-scale stagger-item",
                   selectedDoc === doc.id ? "border-primary bg-primary/5" : ""
                 )}
                 onClick={() => setSelectedDoc(selectedDoc === doc.id ? null : doc.id)}
+                style={{ animationDelay: `${0.1 + index * 0.1}s` }}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-semibold">{doc.title}</h3>
+                      <h3 className="font-semibold story-link">{doc.title}</h3>
                       <Badge className={getStatusColor(doc.status)} variant="secondary">
                         {doc.status}
                       </Badge>
@@ -222,7 +223,7 @@ export const Dashboard = ({ userRole }: DashboardProps) => {
                     
                     <div className="flex flex-wrap gap-2">
                       {doc.keywords.map((keyword) => (
-                        <Badge key={keyword} variant="secondary" className="text-xs">
+                        <Badge key={keyword} variant="secondary" className="text-xs hover-scale">
                           {keyword}
                         </Badge>
                       ))}
@@ -241,17 +242,17 @@ export const Dashboard = ({ userRole }: DashboardProps) => {
                     </div>
 
                     {selectedDoc === doc.id && (
-                      <div className="pt-3 border-t space-y-3">
+                      <div className="pt-3 border-t space-y-3 animate-fade-in">
                         <div className="flex gap-2">
-                          <Button size="sm" variant="outline">
+                          <Button size="sm" variant="outline" className="hover-glow">
                             <Eye className="h-4 w-4 mr-1" />
                             View Source
                           </Button>
-                          <Button size="sm" variant="outline">
+                          <Button size="sm" variant="outline" className="hover-glow">
                             <MessageSquare className="h-4 w-4 mr-1" />
                             Add Comment
                           </Button>
-                          <Button size="sm" variant="default">
+                          <Button size="sm" variant="default" className="button-glow">
                             <ArrowRight className="h-4 w-4 mr-1" />
                             Assign Task
                           </Button>
@@ -268,40 +269,40 @@ export const Dashboard = ({ userRole }: DashboardProps) => {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="shadow-soft hover:shadow-medium transition-shadow cursor-pointer">
+        <Card className="shadow-soft hover:shadow-medium transition-shadow cursor-pointer card-hover stagger-item">
           <CardContent className="p-6 text-center">
-            <Upload className="h-12 w-12 text-primary mx-auto mb-4" />
+            <Upload className="h-12 w-12 text-primary mx-auto mb-4 hover-scale" />
             <h3 className="font-semibold mb-2">Upload Document</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Upload new documents for processing
             </p>
-            <Button className="w-full" variant="default">
+            <Button className="w-full button-glow" variant="default">
               Upload Files
             </Button>
           </CardContent>
         </Card>
 
-        <Card className="shadow-soft hover:shadow-medium transition-shadow cursor-pointer">
+        <Card className="shadow-soft hover:shadow-medium transition-shadow cursor-pointer card-hover stagger-item">
           <CardContent className="p-6 text-center">
-            <Search className="h-12 w-12 text-accent mx-auto mb-4" />
+            <Search className="h-12 w-12 text-accent mx-auto mb-4 hover-scale" />
             <h3 className="font-semibold mb-2">Semantic Search</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Find documents using intelligent search
             </p>
-            <Button className="w-full" variant="accent">
+            <Button className="w-full button-glow" variant="accent">
               Search Documents
             </Button>
           </CardContent>
         </Card>
 
-        <Card className="shadow-soft hover:shadow-medium transition-shadow cursor-pointer">
+        <Card className="shadow-soft hover:shadow-medium transition-shadow cursor-pointer card-hover stagger-item">
           <CardContent className="p-6 text-center">
-            <AlertTriangle className="h-12 w-12 text-warning mx-auto mb-4" />
+            <AlertTriangle className="h-12 w-12 text-warning mx-auto mb-4 hover-scale" />
             <h3 className="font-semibold mb-2">Urgent Tasks</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Review high-priority documents
             </p>
-            <Button className="w-full" variant="warning">
+            <Button className="w-full button-glow" variant="warning">
               View Tasks
             </Button>
           </CardContent>

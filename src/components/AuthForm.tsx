@@ -27,21 +27,21 @@ export const AuthForm = ({ onLogin }: AuthFormProps) => {
 
   return (
     <div className="min-h-screen bg-gradient-surface flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-6">
+      <div className="w-full max-w-md space-y-6 animate-fade-in">
         {/* Logo and Header */}
-        <div className="text-center space-y-4">
-          <div className="mx-auto w-16 h-16 bg-gradient-hero rounded-full flex items-center justify-center shadow-glow">
-            <Train className="h-8 w-8 text-white" />
+        <div className="text-center space-y-4 animate-bounce-in">
+          <div className="mx-auto w-16 h-16 bg-gradient-hero rounded-full flex items-center justify-center shadow-glow animate-glow">
+            <Train className="h-8 w-8 text-white hover-scale" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-hero bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-gradient-hero bg-clip-text text-transparent story-link">
               KMRL Intelligence
             </h1>
             <p className="text-muted-foreground">Document Management System</p>
           </div>
         </div>
 
-        <Card className="shadow-medium">
+        <Card className="shadow-medium card-hover animate-slide-in-up">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl text-center">
               {isLogin ? "Sign In" : "Create Account"}
@@ -55,7 +55,7 @@ export const AuthForm = ({ onLogin }: AuthFormProps) => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
+              <div className="space-y-2 stagger-item">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -64,9 +64,10 @@ export const AuthForm = ({ onLogin }: AuthFormProps) => {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
+                  className="transition-all focus:shadow-soft"
                 />
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2 stagger-item">
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
@@ -75,41 +76,42 @@ export const AuthForm = ({ onLogin }: AuthFormProps) => {
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
+                  className="transition-all focus:shadow-soft"
                 />
               </div>
               
               {!isLogin && (
-                <div className="space-y-2">
+                <div className="space-y-2 stagger-item animate-fade-in">
                   <Label htmlFor="role">Department Role</Label>
                   <Select 
                     value={formData.role} 
                     onValueChange={(value) => setFormData({ ...formData, role: value })}
                     required
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="transition-all focus:shadow-soft">
                       <SelectValue placeholder="Select your role" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="admin">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 hover-scale">
                           <Shield className="h-4 w-4" />
                           Administrator
                         </div>
                       </SelectItem>
                       <SelectItem value="engineer">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 hover-scale">
                           <Train className="h-4 w-4" />
                           Engineering
                         </div>
                       </SelectItem>
                       <SelectItem value="hr">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 hover-scale">
                           <FileText className="h-4 w-4" />
                           Human Resources
                         </div>
                       </SelectItem>
                       <SelectItem value="finance">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 hover-scale">
                           <FileText className="h-4 w-4" />
                           Finance
                         </div>
@@ -119,24 +121,24 @@ export const AuthForm = ({ onLogin }: AuthFormProps) => {
                 </div>
               )}
 
-              <Button type="submit" className="w-full" variant="hero">
+              <Button type="submit" className="w-full button-glow hover-glow stagger-item" variant="hero">
                 {isLogin ? "Sign In" : "Create Account"}
               </Button>
             </form>
 
-            <div className="mt-4 text-center text-sm">
+            <div className="mt-4 text-center text-sm stagger-item">
               {isLogin ? "Don't have an account? " : "Already have an account? "}
               <button
                 type="button"
                 onClick={() => setIsLogin(!isLogin)}
-                className="text-primary hover:underline font-medium"
+                className="text-primary hover:underline font-medium story-link"
               >
                 {isLogin ? "Sign up" : "Sign in"}
               </button>
             </div>
 
             {/* Demo Login Buttons */}
-            <div className="mt-6 space-y-2">
+            <div className="mt-6 space-y-2 stagger-item">
               <p className="text-xs text-muted-foreground text-center">Quick Demo Access:</p>
               <div className="grid grid-cols-2 gap-2">
                 <Button 
@@ -144,6 +146,7 @@ export const AuthForm = ({ onLogin }: AuthFormProps) => {
                   variant="outline" 
                   size="sm"
                   onClick={() => onLogin("admin")}
+                  className="hover-glow hover-scale"
                 >
                   Admin Demo
                 </Button>
@@ -152,6 +155,7 @@ export const AuthForm = ({ onLogin }: AuthFormProps) => {
                   variant="outline" 
                   size="sm"
                   onClick={() => onLogin("engineer")}
+                  className="hover-glow hover-scale"
                 >
                   Engineer Demo
                 </Button>

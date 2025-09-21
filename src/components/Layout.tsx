@@ -80,13 +80,13 @@ export const Layout = ({ children, userRole, onLogout }: LayoutProps) => {
 
       {/* Sidebar */}
       <aside className={cn(
-        "fixed inset-y-0 left-0 z-50 w-64 bg-card border-r transform transition-transform duration-200 ease-in-out lg:translate-x-0",
-        sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        "fixed inset-y-0 left-0 z-50 w-64 bg-card border-r transform transition-all duration-300 ease-in-out lg:translate-x-0",
+        sidebarOpen ? "translate-x-0 animate-slide-in-left" : "-translate-x-full animate-slide-out-right"
       )}>
         <div className="flex h-full flex-col">
           {/* Logo */}
-          <div className="flex h-16 items-center gap-2 px-6 bg-gradient-hero">
-            <Train className="h-8 w-8 text-white" />
+          <div className="flex h-16 items-center gap-2 px-6 bg-gradient-hero animate-glow">
+            <Train className="h-8 w-8 text-white hover-scale" />
             <div className="text-white">
               <h1 className="text-lg font-bold">KMRL</h1>
               <p className="text-xs opacity-90">Intelligence</p>
@@ -94,7 +94,7 @@ export const Layout = ({ children, userRole, onLogout }: LayoutProps) => {
             <Button
               variant="ghost"
               size="icon"
-              className="ml-auto lg:hidden text-white hover:bg-white/20"
+              className="ml-auto lg:hidden text-white hover:bg-white/20 hover-scale"
               onClick={() => setSidebarOpen(false)}
             >
               <X className="h-5 w-5" />
@@ -102,8 +102,8 @@ export const Layout = ({ children, userRole, onLogout }: LayoutProps) => {
           </div>
 
           {/* User Role Badge */}
-          <div className="p-4">
-            <Badge className={cn("w-full justify-center", currentRole.color)}>
+          <div className="p-4 animate-fade-in">
+            <Badge className={cn("w-full justify-center animate-bounce-in", currentRole.color)}>
               <currentRole.icon className="h-4 w-4 mr-1" />
               {currentRole.label}
             </Badge>
@@ -111,15 +111,16 @@ export const Layout = ({ children, userRole, onLogout }: LayoutProps) => {
 
           {/* Navigation */}
           <nav className="flex-1 space-y-1 p-4">
-            {filteredNavigation.map((item) => (
+            {filteredNavigation.map((item, index) => (
               <Button
                 key={item.name}
                 variant="ghost"
                 className={cn(
-                  "w-full justify-start hover:bg-accent",
+                  "w-full justify-start hover:bg-accent hover-scale stagger-item story-link",
                   location.pathname === item.href ? "bg-accent text-accent-foreground" : ""
                 )}
                 onClick={() => navigate(item.href)}
+                style={{ animationDelay: `${0.1 + index * 0.05}s` }}
               >
                 <item.icon className="h-5 w-5 mr-3" />
                 {item.name}

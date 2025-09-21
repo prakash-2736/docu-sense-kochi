@@ -7,6 +7,8 @@ import { DocumentUpload } from "@/components/DocumentUpload";
 import { DocumentSearch } from "@/components/DocumentSearch";
 import { TaskManagement } from "@/components/TaskManagement";
 import { NotificationCenter } from "@/components/NotificationCenter";
+import { Analytics } from "@/components/Analytics";
+import { Settings } from "@/components/Settings";
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
@@ -41,6 +43,8 @@ const Index = () => {
         <Route path="/search" element={<DocumentSearch userRole={user.role} />} />
         <Route path="/tasks" element={<TaskManagement userRole={user.role} />} />
         <Route path="/notifications" element={<NotificationCenter userRole={user.role} />} />
+        <Route path="/analytics" element={<Analytics userRole={user.role} />} />
+        <Route path="/settings" element={<Settings userRole={user.role} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Layout>
